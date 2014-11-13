@@ -1,0 +1,4 @@
+MultiClip
+=========
+
+Multi-Clipboard manager
