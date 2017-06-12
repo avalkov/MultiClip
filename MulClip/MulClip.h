@@ -1,19 +1,20 @@
 
 #include <windows.h>
 
-#define ClipHintSize 128
+#define CLIP_HINT_SIZE 128
 
-static DWORD SupportedClipTypes[] = {
+static DWORD SUPPORTED_CLIP_TYPES[] =
+{
 	CF_TEXT,
 	CF_HDROP,
 };
 
-struct _ClipEntry{
-
-	DWORD Id;
-	DWORD Type;
-	DWORD Size;
-	DWORD HintSize;
+struct _ClipEntry
+{
+	DWORD id;
+	DWORD type;
+	DWORD size;
+	DWORD hintSize;
 	BYTE *pContent;
 
 	struct _ClipEntry *pNext;
@@ -21,19 +22,15 @@ struct _ClipEntry{
 
 typedef struct _ClipEntry __ClipEntry;
 
-__ClipEntry EmptyClip;
-
 CRITICAL_SECTION crsClipsList;
-__ClipEntry *pClipsList,*pSelEntry;
-DWORD ClipsListSeqId;
+__ClipEntry emptyClip;
+__ClipEntry *pClipsList, *pSelEntry;
+DWORD clipsListSeqId;
 BOOL bListShown;
 HANDLE hHeap;
 
-HWND MainHwnd;
+HWND mainHwnd, hwndNextViewer; 
 
-HWND hwndNextViewer; 
-
-BYTE ClassName[]  = "MulClipWindowClassName";
-
-BYTE sEmpty[] = "Clipboard history is empty.";
+BYTE CLASS_NAME[]  = "MulClipWindowClassName";
+BYTE CLIPBOARD_IS_EMPTY_MESSAGE[] = "Clipboard history is empty.";
 
